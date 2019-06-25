@@ -19,95 +19,104 @@ export default new Vuex.Store({
     cart: []
   },
   mutations: {
-    initialiseStore (state) {
+    INITIALISE_STORE (state) {
       if (localStorage.getItem('store')) {
         this.replaceState(
           Object.assign(state, JSON.parse(localStorage.getItem('store')))
         )
       }
     },
+    LOGIN (state, user) {
+      state.loginState = 'loggedIn'
+      state.cart = []
+      state.ledgers = []
+      state.currentUser = user
+    },
+    LOGOUT (state) {
+      state.loginState = 'loggedOut'
+      state.currentUser = false
+      state.cart = []
+      state.ledgers = []
+    },
+    ADD_TO_CART ({ cart }, product) {
+      cart.push(product)
+    },
+    REMOVE_FROM_CART ({ cart }, idx) {
+      cart.splice(idx, 1)
+    },
+    SET_LEDGERS (state, { ledgers }) {
+      state.ledgers = ledgers
+    }
+  },
+  getters: {
+    cartCount ({ cart }) {
+      return cart.length
+    },
+    cartSum ({ cart }) {
+      return cart.reduce(function (prev, item) {
+        return prev + item.price
+      }, 0)
+    }
+  },
+  actions: {
+    addToCart (context, { product }) {
+      context.commit('ADD_TO_CART', product)
+    },
+    removeFromCart (context, { idx }) {
+      context.commit('REMOVE_FROM_CART', idx)
+    },
+    async refreshLedgers (context) {
+      let ledgers = await api.getLedgers(this.state.currentUser.id)
+      context.commit('SET_LEDGERS', {
+        ledgers
+      })
+    },
+    async refreshProducts ({ state }) {
+      state.products = await api.getProducts()
+    },
+    async refreshUsers ({ state }) {
+      state.users = await api.getUsers()
+    },
     login (context, user) {
-      this.state.loginState = 'loggedIn'
-      this.state.cart = []
-      this.state.ledgers = []
-      this.state.currentUser = user
-      this.dispatch('refreshLedgers')
+      context.commit('LOGIN', user)
+      context.dispatch('refreshLedgers')
     },
-    logout () {
-      // api.deleteCurrenttUser()
-      this.state.loginState = 'loggedOut'
-      this.state.currentUser = false
-      this.state.cart = []
-      this.state.ledgers = []
+    logoutAction () {
+      Vue.router.push('/')
+      this.commit('LOGOUT')
     },
-    addToCart (context, payload) {
-      this.state.cart.push(payload.product)
-    },
-    removeFromCart (context, payload) {
-      this.state.cart.splice(payload.idx, 1)
-    },
-    checkoutCart () {
-      var audio = new Audio('/static/checkout.mp3')
+    checkoutCart ({ state }) {
+      let audio = new Audio('/static/checkout.mp3')
       audio.play()
-      Promise.all(this.state.cart.map(async (product) => api.createLedger({
-        userId: this.state.currentUser.id,
+      Promise.all(state.cart.map(async (product) => api.createLedger({
+        userId: state.currentUser.id,
         productId: product.id,
         amount: product.price * -1,
         purpose: 'Einkauf: ' + product.name,
         date: Date.now()
       }))).then((e) => {
-        this.state.loginState = 'loggingOut' // Triggers Logout.vue
-        if (this.state.cart.length === 0) {
+        // Triggers Logout.vue
+        state.loginState = 'loggingOut'
+        if (state.cart.length === 0) {
           this.dispatch('logoutAction')
         }
       })
     },
-    chargeBalance (context, payload) {
-      var audio = new Audio('/static/charge.mp3')
+    chargeBalance (context, { amount }) {
+      let audio = new Audio('/static/charge.mp3')
       audio.play()
       api.createLedger({
-        userId: this.state.currentUser.id,
-        amount: payload.amount * 1,
-        purpose: 'Einzahlung: ' + payload.amount.toLocaleString('de-DE', {
+        userId: context.state.currentUser.id,
+        amount: amount * 1,
+        purpose: 'Einzahlung: ' + amount.toLocaleString('de-DE', {
           style: 'currency',
           currency: 'EUR'
         }),
         date: Date.now()
       }).then(
         (e) => {
-          this.dispatch('refreshLedgers')
+          context.dispatch('refreshLedgers')
         })
-    },
-    setLedgers (state, payload) {
-      this.state.ledgers = payload.ledgers
-    },
-    async refreshProducts () {
-      this.state.products = await api.getProducts()
-    },
-    async refreshUsers () {
-      this.state.users = await api.getUsers()
-    }
-  },
-  getters: {
-    cartCount (state) {
-      return state.cart.length
-    },
-    cartSum (state) {
-      return state.cart.reduce(function (prev, item) {
-        return prev + item.price
-      }, 0)
-    }
-  },
-  actions: {
-    async refreshLedgers () {
-      var ledgers = await api.getLedgers(this.state.currentUser.id)
-      this.commit('setLedgers', {
-        ledgers: ledgers
-      })
-    },
-    logoutAction () {
-      Vue.router.push('/')
-      this.commit('logout')
     }
   }
 })

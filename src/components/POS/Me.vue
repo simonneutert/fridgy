@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import {mapActions, mapMutations, mapState} from 'vuex'
+import {mapActions, mapState} from 'vuex'
 
 export default {
   data () {
@@ -89,7 +89,7 @@ export default {
     ...mapActions(['refreshLedgers'])
   },
   methods: {
-    ...mapMutations(['chargeBalance']),
+    ...mapActions(['chargeBalance']),
     refund (ledger) {
       var audio = new Audio('/static/storno.mp3')
       audio.play()

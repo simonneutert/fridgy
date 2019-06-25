@@ -41,7 +41,7 @@ import Login from '@/components/POS/Login'
 import Logout from '@/components/POS/Logout'
 import ProductList from '@/components/POS/ProductList'
 import api from '@/api'
-import { mapState, mapMutations, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Main',
@@ -58,8 +58,8 @@ export default {
     }
   },
   created () {
-    this.$store.commit('refreshProducts')
-    this.$store.commit('refreshUsers')
+    this.refreshProducts()
+    this.refreshUsers()
     // rfid reader and autologin check is disabled by default
     if (process.env.VUE_APP_RFID) {
       this.backgroundLogin = function () {
@@ -71,7 +71,7 @@ export default {
           // && this.$store.currentUser && (currentUser.id !== this.$store.currentUser.id)
           if (this.currentUser === false || (this.currentUser && currentUser && this.currentUser.id !== currentUser.id)) {
             console.log('RFIDLogin')
-            this.$store.commit('login', currentUser)
+            this.login(currentUser)
           }
           this.timer = setTimeout(this.backgroundLogin.bind(this), 1000)
         }.bind(this), function () {
@@ -89,7 +89,7 @@ export default {
   },
   components: { Login, Logout, ProductList },
   methods: {
-    ...mapMutations(['login', 'addToCart', 'removeFromCart', 'checkoutCart'])
+    ...mapActions(['removeFromCart', 'login', 'addToCart', 'refreshProducts', 'refreshUsers', 'checkoutCart'])
   }
 }
 </script>
