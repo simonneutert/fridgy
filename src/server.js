@@ -107,8 +107,19 @@ let shopResource = epilogue.resource({
 
 epilogue.resource({
   model: Ledger,
-  endpoints: ['/ledgers', '/ledgers/:id'],
-  pagination: false
+  endpoints: ['/ledgers', '/ledgers/:id']
+  // pagination: false
+})
+
+app.get('/ledgers/sum/:userid', function (req, res) {
+  Ledger.sum('amount', {where: {userId: req.params.userid}})
+    .then(function (sum) {
+      if (sum) {
+        res.json(sum)
+      } else {
+        res.status(404).send('not found')
+      }
+    })
 })
 
 // Resets the database and launches the express app on :8081

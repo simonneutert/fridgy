@@ -15,6 +15,7 @@ export default new Vuex.Store({
     ledgers: [{
       test: 'tt'
     }],
+    ledgersSum: 0.0,
     users: [],
     cart: []
   },
@@ -30,6 +31,7 @@ export default new Vuex.Store({
       state.loginState = 'loggedIn'
       state.cart = []
       state.ledgers = []
+      state.ledgersSum = 0.0
       state.currentUser = user
     },
     LOGOUT (state) {
@@ -37,6 +39,7 @@ export default new Vuex.Store({
       state.currentUser = false
       state.cart = []
       state.ledgers = []
+      state.ledgersSum = 0.0
     },
     ADD_TO_CART ({ cart }, product) {
       cart.push(product)
@@ -46,6 +49,9 @@ export default new Vuex.Store({
     },
     SET_LEDGERS (state, { ledgers }) {
       state.ledgers = ledgers
+    },
+    SET_LEDGERS_SUM (state, { ledgersSum }) {
+      state.ledgersSum = ledgersSum
     }
   },
   getters: {
@@ -71,6 +77,12 @@ export default new Vuex.Store({
         ledgers
       })
     },
+    async refreshLedgersSum (context) {
+      let ledgersSum = await api.getLedgersSum(this.state.currentUser.id)
+      context.commit('SET_LEDGERS_SUM', {
+        ledgersSum
+      })
+    },
     async refreshProducts ({ state }) {
       state.products = await api.getProducts()
     },
@@ -80,6 +92,7 @@ export default new Vuex.Store({
     login (context, user) {
       context.commit('LOGIN', user)
       context.dispatch('refreshLedgers')
+      context.dispatch('refreshLedgersSum')
     },
     logoutAction () {
       Vue.router.push('/')
@@ -95,6 +108,7 @@ export default new Vuex.Store({
         purpose: 'Einkauf: ' + product.name,
         date: Date.now()
       }))).then((e) => {
+        this.dispatch('refreshLedgersSum')
         // Triggers Logout.vue
         state.loginState = 'loggingOut'
         if (state.cart.length === 0) {
@@ -103,8 +117,6 @@ export default new Vuex.Store({
       })
     },
     chargeBalance (context, { amount }) {
-      let audio = new Audio('/static/charge.mp3')
-      audio.play()
       api.createLedger({
         userId: context.state.currentUser.id,
         amount: amount * 1,
@@ -116,6 +128,9 @@ export default new Vuex.Store({
       }).then(
         (e) => {
           context.dispatch('refreshLedgers')
+          context.dispatch('refreshLedgersSum')
+          let audio = new Audio('/static/charge.mp3')
+          audio.play()
         })
     }
   }

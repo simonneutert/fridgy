@@ -67,5 +67,8 @@ export default {
   },
   getLedgers (userid) {
     return this.execute('get', `/ledgers?userId=${userid}&sort=-date`)
+  },
+  getLedgersSum (userid) {
+    return this.execute('get', `/ledgers/sum/${userid}`)
   }
 }

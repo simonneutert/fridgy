@@ -6,7 +6,7 @@
       <b-col>
         <b-jumbotron lead="Dein Kontostand">
           <template slot="header">
-            {{ ledgerDebt(ledgers) }}
+            {{ ledgerDebt(ledgersSum) }}
           </template>
         </b-jumbotron>
         <table class="table table-striped">
@@ -69,9 +69,9 @@ export default {
       errorMsg: null,
       loading: false,
       model: {},
-      ledgerDebt (ledgers) {
-        if (ledgers && ledgers.length > 0) {
-          return ledgers.map(x => x.amount).reduce((accumulator, currentValue) => accumulator + currentValue).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })
+      ledgerDebt (ledgersSum) {
+        if (ledgersSum > 0) {
+          return ledgersSum.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })
         } else {
           return (0.0).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })
         }
@@ -85,8 +85,8 @@ export default {
     this.$store.state.currentViewTitle = 'Mein Konto'
   },
   computed: {
-    ...mapState(['users', 'cart', 'loginState', 'currentUser', 'ledgers']),
-    ...mapActions(['refreshLedgers'])
+    ...mapState(['users', 'cart', 'loginState', 'currentUser', 'ledgers', 'ledgersSum']),
+    ...mapActions(['refreshLedgers', 'refreshLedgersSum'])
   },
   methods: {
     ...mapActions(['chargeBalance']),

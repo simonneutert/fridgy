@@ -5,13 +5,13 @@
     <div v-if="loginState=='loggedIn'">
       <div style="margin-right: 330px;">
         <div style="padding: 0px 60px 0px 30px;">
-          <div v-if="ledgerDebtValue(ledgers) >= -3.0">
+          <div v-if="ledgersSum >= -3.0">
             <h3>Produkte</h3>
             <ProductList v-bind:items='products' v-bind:onProductClick='addToCart' />
           </div>
           <div v-else>
             <h3>
-              Bezahle deine Schulden, dann geht es auch weiter!
+              Bezahle deine Schulden in Höhe von {{ledgerDebtValue(ledgersSum)}}, dann geht es auch weiter!
               <b-card :title="Paypal" style="text-align:center;">
                 <img src="/static/img/paypal-simon.gif" />
               </b-card>
@@ -27,7 +27,7 @@
           </div>
             <ProductList v-bind:items='cart' v-bind:onProductClick='removeFromCart' compact="true" />
         </div>
-        <div class="total" v-if="ledgerDebtValue(ledgers) >= -3.0">
+        <div class="total" v-if="ledgersSum >= -3.0">
           <button v-on:click='checkoutCart()'>Checkout</button>
           <div style="float: right;">{{cartSum.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}}</div>
         </div>
@@ -48,9 +48,9 @@ export default {
   data () {
     return {
       state: 'loggedOut',
-      ledgerDebtValue (ledgers) {
-        if (ledgers && ledgers.length > 0) {
-          return ledgers.map(x => x.amount).reduce((accumulator, currentValue) => accumulator + currentValue)
+      ledgerDebtValue (ledgersSum) {
+        if (ledgersSum) {
+          return ledgersSum.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })
         } else {
           return 0.0
         }
@@ -84,7 +84,7 @@ export default {
     console.log('INIT')
   },
   computed: {
-    ...mapState(['products', 'cart', 'loginState', 'currentUser', 'ledgers']),
+    ...mapState(['products', 'cart', 'loginState', 'currentUser', 'ledgers', 'ledgersSum']),
     ...mapGetters(['cartCount', 'cartSum'])
   },
   components: { Login, Logout, ProductList },

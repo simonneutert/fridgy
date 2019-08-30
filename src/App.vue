@@ -6,7 +6,7 @@
         <a v-on:click="logoutAction()" class="logout" href="javascript:void(0)">Logout</a>
         <v-icon name="user"></v-icon> <router-link to="/me"><a style="color:#fff">{{currentUser.name}}
         <small>
-          ({{ ledgerDebt(ledgers) }})
+          ({{ ledgerDebt(ledgersSum) }})
           </small>
         </a></router-link>
       </span>
@@ -25,12 +25,8 @@
     name: 'app',
     data () {
       return {
-        ledgerDebt (ledgers) {
-          if (ledgers && ledgers.length > 0) {
-            return ledgers.map(x => x.amount).reduce((accumulator, currentValue) => accumulator + currentValue).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })
-          } else {
-            return (0.0).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })
-          }
+        ledgerDebt (ledgersSum) {
+          return (ledgersSum).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })
         }
       }
     },
@@ -41,7 +37,7 @@
       }, 1000)
     },
     computed: {
-      ...mapState(['currentUser', 'currentViewTitle', 'ledgers']),
+      ...mapState(['currentUser', 'currentViewTitle', 'ledgers', 'ledgersSum']),
       ...mapActions(['logoutAction'])
     }
   }
