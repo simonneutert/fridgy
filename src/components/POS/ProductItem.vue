@@ -1,15 +1,15 @@
 <template>
-<transition name="fade">
-  <div class="productItem" v-on:click='onClick({product: product, idx: idx})'>
-    <h5 class="title">
-      {{product.name}}
-    </h5>
-    <span class="price">{{product.price.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}}</span>
-    <div v-if="compact!='true'">
-      <span class="description">{{product.description}}</span>
+  <transition name="fade">
+    <div class="productItem" v-on:click='onClick({product: product, idx: idx})'>
+      <h5 class="title">
+        {{product.name}}
+      </h5>
+      <span class="price">{{product.price.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}}</span>
+      <div v-if="compact!='true'">
+        <span class="description">{{product.description}}</span>
+      </div>
     </div>
-  </div>
-</transition>
+  </transition>
 </template>
 
 <script>
@@ -31,8 +31,12 @@ export default {
   padding: 15px;
   background: #FFF;
   color: #555;
+  width: 270px;
+  min-height: 120px;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
   box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
-  margin: 10px 0px;
   cursor: pointer;
   position: relative;
   border-radius: 3px;
