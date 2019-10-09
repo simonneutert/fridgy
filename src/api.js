@@ -47,7 +47,7 @@ export default {
   },
   // Products
   getProducts () {
-    return this.execute('get', '/products?sort=name')
+    return this.execute('get', '/products?sort=price')
   },
   getProduct (id) {
     return this.execute('get', `/products/${id}`)
