@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ProductItem
+    <ProductItemInCart
       v-for="(product,index) in items"
       v-bind:key="index"
       v-bind:idx="index"
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import ProductItem from '@/components/POS/ProductItem'
+import ProductItemInCart from '@/components/POS/ProductItemInCart'
 
 export default {
   name: 'ProductList',
@@ -21,7 +21,7 @@ export default {
     onProductClick: Function,
     compact: false
   },
-  components: { ProductItem }
+  components: { ProductItemInCart }
 }
 </script>
 

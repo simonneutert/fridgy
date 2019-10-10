@@ -3,8 +3,8 @@
     <Login v-if="loginState=='loggedOut'" v-bind:loginCallback="login" />
     <Logout v-if="loginState=='loggingOut'"/>
     <div v-if="loginState=='loggedIn'">
-      <div style="margin-right: 330px;">
-        <div style="padding: 0px 60px 0px 30px;">
+      <div style="margin-right: 300px;">
+        <div style="padding: 0px 20px 0px 20px;">
           <div v-if="ledgersSum >= -3.0">
             <h3>Produkte</h3>
             <ProductList v-bind:items='products' v-bind:onProductClick='addToCart' />
@@ -25,7 +25,10 @@
           <div v-if='cartCount==0'>
             &laquo; Bitte wähle links die gewünschten Produkte aus
           </div>
-            <ProductList v-bind:items='cart' v-bind:onProductClick='removeFromCart' compact="true" />
+          <ProductSelectedList 
+            v-bind:items='cart' 
+            v-bind:onProductClick='removeFromCart' 
+            compact="true" />
         </div>
         <div class="total" v-if="ledgersSum >= -3.0">
           <button v-on:click='checkoutCart()'>Checkout</button>
@@ -40,6 +43,7 @@
 import Login from '@/components/POS/Login'
 import Logout from '@/components/POS/Logout'
 import ProductList from '@/components/POS/ProductList'
+import ProductSelectedList from '@/components/POS/ProductSelectedList'
 import api from '@/api'
 import { mapState, mapGetters, mapActions } from 'vuex'
 
@@ -87,7 +91,7 @@ export default {
     ...mapState(['products', 'cart', 'loginState', 'currentUser', 'ledgers', 'ledgersSum']),
     ...mapGetters(['cartCount', 'cartSum'])
   },
-  components: { Login, Logout, ProductList },
+  components: { Login, Logout, ProductList, ProductSelectedList },
   methods: {
     ...mapActions(['removeFromCart', 'login', 'addToCart', 'refreshProducts', 'refreshUsers', 'checkoutCart'])
   }
@@ -113,7 +117,7 @@ export default {
   right: 0;
   top: 55px;
   bottom: 0;
-  width: 350px;
+  width: 280px;
   padding: 30px;
   box-shadow: inset 8px 0 8px -8px rgba(0,0,0,0.2);
 }

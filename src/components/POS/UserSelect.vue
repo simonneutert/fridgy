@@ -1,8 +1,12 @@
 <template>
-    <div class="user" v-on:click="click(user)">
-       <div class="avatar">{{user.name.substr(0,1)}}</div>
-       <div class="username">{{user.name}}</div>
+  <div class="user" v-on:click="click(user)">
+    <div class="avatar">
+      {{user.name.substr(0,1)}}
     </div>
+    <div class="username">
+      {{user.name}}
+    </div>
+  </div>
 </template>
 
 <script>

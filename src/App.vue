@@ -129,7 +129,7 @@ button:active{
 }
 
 main {
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 header {
