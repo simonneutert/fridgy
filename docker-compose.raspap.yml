@@ -13,10 +13,8 @@ services:
       - "8080:8080"
     links:
       - api_backend:api_backend
-      # - rfid_reader:rfid_reader
     privileged: true
     logging:
-      # limit logs retained on host to 25MB
       driver: "json-file"
       options:
         max-size: "5m"
@@ -34,29 +32,12 @@ services:
     volumes:
       - fridgydatabase:/fridgy-backend/database
     logging:
-      # limit logs retained on host to 25MB
       driver: "json-file"
       options:
         max-size: "5m"
         max-file: "5"
     networks:
       - backend
-
-  # rfid_reader:
-  #   build:
-  #     context: .
-  #     dockerfile: ./docker/arm/rfid-reader/Dockerfile
-  #   read_only: true
-  #   restart: unless-stopped
-  #   privileged: true
-  #   logging:
-  #     # limit logs retained on host to 25MB
-  #     driver: "json-file"
-  #     options:
-  #       max-size: "5m"
-  #       max-file: "5"
-  #   networks:
-  #     - backend
 
 volumes:
   fridgydatabase:
