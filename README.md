@@ -50,6 +50,16 @@ https://developer.okta.com/blog/2018/02/15/build-crud-app-vuejs-node
 - run `$ node src/server.js` first in one winows
 - run `$ npm run dev` in the second one
 
+## Copy a backup of the sqlite database to the volume
+
+ssh onto the raspberry, then
+`$ cd /home/pi/fridgy` if that is where your app is...  
+
+`$ docker container create --name temp -v fridgy_fridgydatabase:/fridgy-backend/database/ busybox`  
+`$ docker cp ./database/fridgy.sqlite temp:/fridgy-backend/database/fridgy.sqlite`  
+`$ docker rm temp`
+`$ docker-compose -f docker-compose.raspap.yml restart`
+
 ## Hacker's Choice Award
 
 `$ vue ui`
