@@ -55,6 +55,8 @@ https://developer.okta.com/blog/2018/02/15/build-crud-app-vuejs-node
 ssh onto the raspberry, then
 `$ cd /home/pi/fridgy` if that is where your app is...  
 
+*Docker Compose verwendet Namespaces für named volumes, daher: `fridgy_fridgydatabase`*
+
 `$ docker container create --name temp -v fridgy_fridgydatabase:/fridgy-backend/database/ busybox`  
 `$ docker cp ./database/fridgy.sqlite temp:/fridgy-backend/database/fridgy.sqlite`  
 `$ docker rm temp`  
