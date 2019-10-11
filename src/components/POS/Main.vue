@@ -25,9 +25,9 @@
           <div v-if='cartCount==0'>
             &laquo; Bitte wähle links die gewünschten Produkte aus
           </div>
-          <ProductSelectedList 
-            v-bind:items='cart' 
-            v-bind:onProductClick='removeFromCart' 
+          <ProductSelectedList
+            v-bind:items='cart'
+            v-bind:onProductClick='removeFromCart'
             compact="true" />
         </div>
         <div class="total" v-if="ledgersSum >= -3.0">
@@ -117,7 +117,7 @@ export default {
   right: 0;
   top: 55px;
   bottom: 0;
-  width: 280px;
+  width: 310px;
   padding: 30px;
   box-shadow: inset 8px 0 8px -8px rgba(0,0,0,0.2);
 }

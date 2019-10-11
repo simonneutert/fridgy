@@ -5,9 +5,7 @@
     <b-row>
       <b-col>
         <b-jumbotron lead="Dein Kontostand">
-          <template slot="header">
-            {{ ledgerDebt(ledgersSum) }}
-          </template>
+          <template slot="header">{{ ledgerDebt(ledgersSum) }}</template>
         </b-jumbotron>
         <table class="table table-striped">
           <thead>
@@ -49,19 +47,18 @@
           </p>
         </b-card>
 
-        <br>
+        <br />
 
         <b-card :title="Paypal" style="text-align:center;">
           <img src="/static/img/paypal-simon.gif" />
         </b-card>
-
       </b-col>
     </b-row>
   </div>
 </template>
 
 <script>
-import {mapActions, mapState} from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   data () {
@@ -71,9 +68,15 @@ export default {
       model: {},
       ledgerDebt (ledgersSum) {
         if (ledgersSum > 0) {
-          return ledgersSum.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })
+          return ledgersSum.toLocaleString('de-DE', {
+            style: 'currency',
+            currency: 'EUR'
+          })
         } else {
-          return (0.0).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })
+          return (0.0).toLocaleString('de-DE', {
+            style: 'currency',
+            currency: 'EUR'
+          })
         }
       }
     }
@@ -85,7 +88,14 @@ export default {
     this.$store.state.currentViewTitle = 'Mein Konto'
   },
   computed: {
-    ...mapState(['users', 'cart', 'loginState', 'currentUser', 'ledgers', 'ledgersSum']),
+    ...mapState([
+      'users',
+      'cart',
+      'loginState',
+      'currentUser',
+      'ledgers',
+      'ledgersSum'
+    ]),
     ...mapActions(['refreshLedgers', 'refreshLedgersSum'])
   },
   methods: {
