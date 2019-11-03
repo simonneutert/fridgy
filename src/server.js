@@ -69,7 +69,11 @@ epilogue.initialize({
 })
 
 app.get('/user', function (req, res) {
-  User.findOne({where: {id: currentUser}})
+  User.findOne({
+    where: {
+      id: currentUser
+    }
+  })
     .then(function (user) {
       if (user) {
         res.json(user)
@@ -81,7 +85,11 @@ app.get('/user', function (req, res) {
 })
 
 app.post('/user/:rfid', function (req, res) {
-  User.findOne({where: {rfid_key: req.params.rfid}})
+  User.findOne({
+    where: {
+      rfid_key: req.params.rfid
+    }
+  })
     .then(function (user) {
       if (user) {
         currentUser = user.id
@@ -112,7 +120,11 @@ epilogue.resource({
 })
 
 app.get('/ledgers/sum/:userid', function (req, res) {
-  Ledger.sum('amount', {where: {userId: req.params.userid}})
+  Ledger.sum('amount', {
+    where: {
+      userId: req.params.userid
+    }
+  })
     .then(function (sum) {
       if (sum) {
         res.json(sum)
