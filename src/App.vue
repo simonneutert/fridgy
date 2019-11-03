@@ -23,18 +23,16 @@
 
   export default {
     name: 'app',
-    data () {
-      return {
-        ledgerDebt (ledgersSum) {
-          return (ledgersSum).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })
-        }
-      }
-    },
     created () {
       this.currentTime = ''
       setInterval((e) => {
         this.currentTime = new Date().toLocaleTimeString('de-DE', {hour: '2-digit', minute: '2-digit'})
       }, 1000)
+    },
+    methods: {
+      ledgerDebt (ledgersSum) {
+        return (ledgersSum).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })
+      }
     },
     computed: {
       ...mapState(['currentUser', 'currentViewTitle', 'ledgers', 'ledgersSum']),

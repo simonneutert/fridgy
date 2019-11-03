@@ -65,20 +65,7 @@ export default {
     return {
       errorMsg: null,
       loading: false,
-      model: {},
-      ledgerDebt (ledgersSum) {
-        if (ledgersSum > 0) {
-          return ledgersSum.toLocaleString('de-DE', {
-            style: 'currency',
-            currency: 'EUR'
-          })
-        } else {
-          return (0.0).toLocaleString('de-DE', {
-            style: 'currency',
-            currency: 'EUR'
-          })
-        }
-      }
+      model: {}
     }
   },
   async created () {
@@ -104,6 +91,13 @@ export default {
       var audio = new Audio('/static/storno.mp3')
       audio.play()
       this.errorMsg = 'Oh no - Wir erlauben kein Storno...'
+    },
+    ledgerDebt (ledgersSum) {
+      if (ledgersSum > 0) {
+        return ledgersSum.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })
+      } else {
+        return (0.0).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })
+      }
     }
   }
 }
