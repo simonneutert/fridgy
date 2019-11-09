@@ -12,7 +12,7 @@
           <div v-else>
             <h3>
               Bezahle deine Schulden in Höhe von {{ledgerDebtValue(ledgersSum)}}, dann geht es auch weiter!
-              <b-card :title="Paypal" style="text-align:center;">
+              <b-card :title='"Paypal"' style="text-align:center;">
                 <img src="/static/img/paypal-simon.gif" />
               </b-card>
             </h3>

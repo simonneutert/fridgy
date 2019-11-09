@@ -17,6 +17,9 @@ store.subscribe((mutation, state) => {
 
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
+
+Vue.config.devtools = true
+
 Vue.component('v-icon', Icon)
 
 /* eslint-disable no-new */
