@@ -93,11 +93,7 @@ export default {
       this.errorMsg = 'Oh no - Wir erlauben kein Storno...'
     },
     ledgerDebt (ledgersSum) {
-      if (ledgersSum > 0) {
-        return ledgersSum.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })
-      } else {
-        return (0.0).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })
-      }
+      return ledgersSum.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })
     }
   }
 }
