@@ -21,6 +21,7 @@ services:
       - "traefik.enable=true"
       - "traefik.docker.network=web"
       # - "traefik.http.routers.fridgy_front.middlewares=https_redirect"
+      - "traefik.http.routers.fridgy_front.middlewares=secured"
       - "traefik.http.middlewares.secured.chain.middlewares=fridgy_ipwhitelist_middleware, https_redirect"
       - "traefik.http.routers.fridgy_front.entrypoints=web"
       - "traefik.http.routers.fridgy_front.rule=Host(`fridgy.simon-neutert.de`)"
