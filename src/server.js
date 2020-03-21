@@ -20,7 +20,7 @@ app.use(cors(corsOptions))
 
 app.use(function (req, res, next) {
   // stupid authorization :-)
-  if (process.env.NODE_ENV === 'production' && req.get('Authorization') === `Bearer ${bearer}`) {
+  if (process.env.NODE_ENV === 'production' && `${bearer}` !== 'undefined' && req.get('Authorization') === `Bearer ${bearer}`) {
     res.header('Access-Control-Allow-Origin', '*')
     res.header('Access-Control-Allow-Headers', 'Origin, Authorization, X-Authorization, X-Requested-With, Content-Type, Accept')
     next()
