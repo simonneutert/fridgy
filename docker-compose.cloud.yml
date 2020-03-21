@@ -31,6 +31,7 @@ services:
       - "traefik.http.routers.fridgy_front_https.entrypoints=websecure"
       - "traefik.http.routers.fridgy_front_https.rule=Host(`fridgy.simon-neutert.de`)"
       - "traefik.http.routers.fridgy_front_https.tls.certresolver=myhttpchallenge"
+      - "traefik.http.routers.fridgy_front_https.middlewares=secured"
       - "traefik.http.services.fridgy_front.loadbalancer.server.port=8080"
     networks:
       - web
