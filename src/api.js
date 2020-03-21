@@ -15,10 +15,10 @@ export default {
     return client({
       method,
       url: resource,
-      data
-      // headers: {
-      //   Authorization: `Bearer ${accessToken}`
-      // }
+      data,
+      headers: {
+        Authorization: `Bearer xxx`
+      }
     }).then(req => {
       return req.data
     })
