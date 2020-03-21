@@ -12,12 +12,13 @@ export default {
   async execute (method, resource, data) {
     // inject the accessToken for each request
     // let accessToken = await Vue.prototype.$auth.getAccessToken()
+    const bearer = 'Bearer ' + process.env.VUE_APP_BEARER
     return client({
       method,
       url: resource,
       data,
       headers: {
-        Authorization: `Bearer ${process.env.VUE_APP_BEARER}`
+        Authorization: bearer
       }
     }).then(req => {
       return req.data
