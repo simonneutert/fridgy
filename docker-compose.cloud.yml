@@ -20,14 +20,14 @@ services:
     labels: 
       - "traefik.enable=true"
       - "traefik.docker.network=web"
-      - "traefik.http.routers.simonneutert.entrypoints=web"
-      - "traefik.http.routers.simonneutert.rule=Host(`fridgy.simon-neutert.de`)"
-      - "traefik.http.routers.simonneutert.middlewares=https_redirect"
+      - "traefik.http.routers.fridgy_front.entrypoints=web"
+      - "traefik.http.routers.fridgy_front.rule=Host(`fridgy.simon-neutert.de`)"
+      - "traefik.http.routers.fridgy_front.middlewares=https_redirect"
       - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.simonneutert_https.entrypoints=websecure"
-      - "traefik.http.routers.simonneutert_https.rule=Host(`fridgy.simon-neutert.de`)"
-      - "traefik.http.routers.simonneutert_https.tls.certresolver=myhttpchallenge"
-      - "traefik.http.services.simonneutert.loadbalancer.server.port=8080"
+      - "traefik.http.routers.fridgy_front_https.entrypoints=websecure"
+      - "traefik.http.routers.fridgy_front_https.rule=Host(`fridgy.simon-neutert.de`)"
+      - "traefik.http.routers.fridgy_front_https.tls.certresolver=myhttpchallenge"
+      - "traefik.http.services.fridgy_front.loadbalancer.server.port=8080"
     networks:
       - web
       - default
@@ -49,14 +49,14 @@ services:
     labels: 
       - "traefik.enable=true"
       - "traefik.docker.network=web"
-      - "traefik.http.routers.simonneutert.entrypoints=web"
-      - "traefik.http.routers.simonneutert.rule=Host(`fridgy-backend.simon-neutert.de`)"
-      - "traefik.http.routers.simonneutert.middlewares=https_redirect"
+      - "traefik.http.routers.fridgy_back.entrypoints=web"
+      - "traefik.http.routers.fridgy_back.rule=Host(`fridgy-backend.simon-neutert.de`)"
+      - "traefik.http.routers.fridgy_back.middlewares=https_redirect"
       - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.simonneutert_https.entrypoints=websecure"
-      - "traefik.http.routers.simonneutert_https.rule=Host(`fridgy-backend.simon-neutert.de`)"
-      - "traefik.http.routers.simonneutert_https.tls.certresolver=myhttpchallenge"
-      - "traefik.http.services.simonneutert.loadbalancer.server.port=8081"
+      - "traefik.http.routers.fridgy_back_https.entrypoints=websecure"
+      - "traefik.http.routers.fridgy_back_https.rule=Host(`fridgy-backend.simon-neutert.de`)"
+      - "traefik.http.routers.fridgy_back_https.tls.certresolver=myhttpchallenge"
+      - "traefik.http.services.fridgy_back.loadbalancer.server.port=8081"
     networks:
       - web
       - default
