@@ -8,6 +8,8 @@ const client = axios.create({
   json: true
 })
 
+const bearer = process.env.BEARER
+
 export default {
   async execute (method, resource, data) {
     // inject the accessToken for each request
@@ -17,7 +19,7 @@ export default {
       url: resource,
       data,
       headers: {
-        Authorization: `Bearer xxx`
+        Authorization: `Bearer ${bearer}`
       }
     }).then(req => {
       return req.data
