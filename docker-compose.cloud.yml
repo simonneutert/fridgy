@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: ./docker/arm/node-frontend/Dockerfile
       args:
-        vue_app_backend_api_url: '"http://api_backend:8081"'
+        vue_app_backend_api_url: '"https://fridgy-backend.simon-neutert.de"'
     environment:
       TZ: 'Europe/Berlin'
     links:
@@ -47,20 +47,20 @@ services:
       options:
         max-size: "5m"
         max-file: "5"
-    # labels: 
-    #   - "traefik.enable=true"
-    #   - "traefik.docker.network=web"
-    #   - "traefik.http.routers.fridgy_back.entrypoints=web"
-    #   - "traefik.http.routers.fridgy_back.rule=Host(`fridgy-backend.simon-neutert.de`)"
-    #   - "traefik.http.routers.fridgy_back.middlewares=https_redirect"
-    #   - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
-    #   - "traefik.http.routers.fridgy_back_https.entrypoints=websecure"
-    #   - "traefik.http.routers.fridgy_back_https.rule=Host(`fridgy-backend.simon-neutert.de`)"
-    #   - "traefik.http.routers.fridgy_back_https.tls.certresolver=myhttpchallenge"
-    #   - "traefik.http.services.fridgy_back.loadbalancer.server.port=8081"
-    # networks:
-    #   - web
-    #   - default
+    labels: 
+      - "traefik.enable=true"
+      - "traefik.docker.network=web"
+      - "traefik.http.routers.fridgy_back.entrypoints=web"
+      - "traefik.http.routers.fridgy_back.rule=Host(`fridgy-backend.simon-neutert.de`)"
+      - "traefik.http.routers.fridgy_back.middlewares=https_redirect"
+      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.fridgy_back_https.entrypoints=websecure"
+      - "traefik.http.routers.fridgy_back_https.rule=Host(`fridgy-backend.simon-neutert.de`)"
+      - "traefik.http.routers.fridgy_back_https.tls.certresolver=myhttpchallenge"
+      - "traefik.http.services.fridgy_back.loadbalancer.server.port=8081"
+    networks:
+      - web
+      - default
 
 volumes:
   fridgydatabase:
