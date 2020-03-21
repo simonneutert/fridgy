@@ -1,4 +1,4 @@
-FROM arm32v7/node:11.11-stretch
+FROM node:11.11-stretch
 
 EXPOSE 8080
 
