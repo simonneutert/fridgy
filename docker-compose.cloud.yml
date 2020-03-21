@@ -20,6 +20,7 @@ services:
     labels: 
       - "traefik.enable=true"
       - "traefik.docker.network=web"
+      - "traefik.http.routers.fridgy_front.service=fridgy_front"
       # - "traefik.http.routers.fridgy_front.middlewares=https_redirect"
       - "traefik.http.routers.fridgy_front.middlewares=secured"
       - "traefik.http.middlewares.secured.chain.middlewares=https_redirect,known-ips"
