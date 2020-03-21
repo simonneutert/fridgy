@@ -6,11 +6,9 @@ services:
       context: .
       dockerfile: ./docker/arm/node-frontend/Dockerfile
       args:
-        vue_app_backend_api_url: '"http://api_backend:8081"'
+        vue_app_backend_api_url: '"http://fridgy_api_backend_1:8081"'
     environment:
       TZ: 'Europe/Berlin'
-    ports:
-      - "8080:8080"
     links:
       - api_backend:api_backend
     privileged: true
@@ -41,8 +39,6 @@ services:
     build: 
       context: .
       dockerfile: ./docker/arm/node-backend/Dockerfile
-    ports:
-      - "8081:8081"
     volumes:
       - fridgydatabase:/fridgy-backend/database
     logging:
