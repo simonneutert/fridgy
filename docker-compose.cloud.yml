@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: ./docker/arm/node-frontend/Dockerfile
       args:
-        vue_app_backend_api_url: '"http://fridgy_api_backend_1:8081"'
+        vue_app_backend_api_url: '"http://fridgy-backend.simon-neutert.de"'
     environment:
       TZ: 'Europe/Berlin'
     links:
