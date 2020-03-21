@@ -17,6 +17,7 @@ var corsOptions = {
 app.use(cors(corsOptions))
 
 app.use(function (req, res, next) {
+  console.log(req.get('x-authorization'))
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Headers', 'Origin, X-Authorization, X-Requested-With, Content-Type, Accept')
   next()
