@@ -21,14 +21,12 @@ app.use(cors(corsOptions))
 app.use(function (req, res, next) {
   // stupid authorization :-)
   if (req.get('Authorization') === `Bearer ${bearer}`) {
-    console.log('accepted')
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Headers', 'Origin, Authorization, X-Authorization, X-Requested-With, Content-Type, Accept')
+    next()
   } else {
-    console.log('not accepted')
+    res.status(404).send('Sorry, we cannot find that!')
   }
-
-  res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Headers', 'Origin, Authorization, X-Authorization, X-Requested-With, Content-Type, Accept')
-  next()
 })
 
 app.use(bodyParser.json())
