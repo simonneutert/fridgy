@@ -7,9 +7,9 @@ services:
       dockerfile: ./docker/x86/node-frontend/Dockerfile
       args:
         vue_app_backend_api_url: '"https://fridgy-backend.simon-neutert.de"'
+        vue_app_bearer: 'xxx'
     environment:
       TZ: 'Europe/Berlin'
-      BEARER: 'xxx'
     links:
       - api_backend:api_backend
     privileged: true

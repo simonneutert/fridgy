@@ -17,7 +17,7 @@ export default {
       url: resource,
       data,
       headers: {
-        Authorization: `Bearer ${process.env.BEARER}`
+        Authorization: `Bearer ${process.env.VUE_APP_BEARER}`
       }
     }).then(req => {
       return req.data

@@ -20,11 +20,14 @@ COPY . $APP_HOME
 ARG vue_app_backend_api_url
 ENV VUE_APP_BACKEND_API_URL=$vue_app_backend_api_url
 
+ARG vue_app_bearer
+ENV VUE_APP_BEARER=$vue_app_bearer
+
 # enable RFID Reader by commenting this out
 # check settings in the used docker-compose.*.yml, too!
 # ENV VUE_APP_RFID=true
 
-RUN echo "VUE_APP_BACKEND_API_URL=$VUE_APP_BACKEND_API_URL" > .env
+RUN echo "VUE_APP_BEARER=$VUE_APP_BEARER" > .env
 
 RUN npm run build
 
