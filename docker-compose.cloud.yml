@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: ./docker/arm/node-frontend/Dockerfile
       args:
-        vue_app_backend_api_url: '"http://api_backend"'
+        vue_app_backend_api_url: '"http://api_backend:8081"'
     environment:
       TZ: 'Europe/Berlin'
     links:
@@ -20,7 +20,7 @@ services:
     labels: 
       - "traefik.enable=true"
       - "traefik.docker.network=web"
-      - "traefik.http.middlewares.fridgy_front-ipwhitelist.ipwhitelist.sourcerange=83.135.72.67"
+      - "traefik.http.middlewares.testIPwhitelist.ipwhitelist.sourcerange=83.135.72.67"
       - "traefik.http.routers.fridgy_front.entrypoints=web"
       - "traefik.http.routers.fridgy_front.rule=Host(`fridgy.simon-neutert.de`)"
       - "traefik.http.routers.fridgy_front.middlewares=https_redirect"
