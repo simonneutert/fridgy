@@ -24,7 +24,7 @@ services:
       - "traefik.http.routers.fridgy_front.rule=Host(`fridgy.simon-neutert.de`)"
       - "traefik.http.middlewares.fridgy_ipwhitelist.ipwhitelist.sourcerange=83.135.72.67"
       - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.fridgy_front.middlewares=fridgy_ipwhitelist, https_redirect"
+      - "traefik.http.routers.fridgy_front.middlewares=fridgy_ipwhitelist,ipwhitelist,https_redirect"
       - "traefik.http.routers.fridgy_front_https.entrypoints=websecure"
       - "traefik.http.routers.fridgy_front_https.rule=Host(`fridgy.simon-neutert.de`)"
       - "traefik.http.routers.fridgy_front_https.tls.certresolver=myhttpchallenge"

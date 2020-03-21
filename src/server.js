@@ -4,6 +4,8 @@ const bodyParser = require('body-parser')
 const Sequelize = require('sequelize')
 const epilogue = require('epilogue')
 
+const bearer = process.env.BEARER
+
 var currentUser = 0
 
 let app = express()
@@ -17,10 +19,8 @@ var corsOptions = {
 app.use(cors(corsOptions))
 
 app.use(function (req, res, next) {
-  console.log(req.get('X-Authorization'))
-  console.log(req.get('Authorization'))
-
-  if (req.get('Authorization') === 'xxx') {
+  // stupid authorization :-)
+  if (req.get('Authorization') === `Bearer ${bearer}`) {
     console.log('accepted')
   } else {
     console.log('not accepted')
