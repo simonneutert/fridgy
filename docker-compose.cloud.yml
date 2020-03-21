@@ -31,7 +31,8 @@ services:
       - "traefik.http.routers.simonneutert_https.tls.certresolver=myhttpchallenge"
       - "traefik.http.services.simonneutert.loadbalancer.server.port=8080"
     networks:
-      - backend
+      - web
+      - default
 
   api_backend:
     restart: unless-stopped
@@ -49,11 +50,24 @@ services:
       options:
         max-size: "5m"
         max-file: "5"
+    labels: 
+      - "traefik.enable=true"
+      - "traefik.docker.network=web"
+      - "traefik.http.routers.simonneutert.entrypoints=web"
+      - "traefik.http.routers.simonneutert.rule=Host(`fridgy-backend.simon-neutert.de`)"
+      - "traefik.http.routers.simonneutert.middlewares=https_redirect"
+      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.simonneutert_https.entrypoints=websecure"
+      - "traefik.http.routers.simonneutert_https.rule=Host(`fridgy-backend.simon-neutert.de`)"
+      - "traefik.http.routers.simonneutert_https.tls.certresolver=myhttpchallenge"
+      - "traefik.http.services.simonneutert.loadbalancer.server.port=8081"
     networks:
-      - backend
+      - web
+      - default
 
 volumes:
   fridgydatabase:
 
 networks:
-  backend:
+  web:
+    external: true
