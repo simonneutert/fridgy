@@ -17,9 +17,16 @@ var corsOptions = {
 app.use(cors(corsOptions))
 
 app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-  next()
+  if (process.env.NODE_ENV === 'production' && req.ip && req.ip !== '83.135.72.67') {
+    res.writeHead(404, {
+      'Content-Type': 'text/plain'
+    })
+    res.end('Not found')
+  } else {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+    next()
+  }
 })
 
 app.use(bodyParser.json())
