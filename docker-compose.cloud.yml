@@ -22,7 +22,7 @@ services:
       - "traefik.docker.network=web"
       # - "traefik.http.routers.fridgy_front.middlewares=https_redirect"
       - "traefik.http.routers.fridgy_front.middlewares=secured"
-      - "traefik.http.middlewares.secured.chain.middlewares=fridgy_ipwhitelist_middleware, https_redirect"
+      - "traefik.http.middlewares.secured.chain.middlewares=https_redirect, fridgy_ipwhitelist_middleware"
       - "traefik.http.routers.fridgy_front.entrypoints=web"
       - "traefik.http.routers.fridgy_front.rule=Host(`fridgy.simon-neutert.de`)"
       - "traefik.http.middlewares.fridgy_ipwhitelist_middleware.ipwhitelist.sourcerange=83.135.72.67"
