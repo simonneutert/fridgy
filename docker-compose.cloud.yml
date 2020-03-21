@@ -9,6 +9,7 @@ services:
         vue_app_backend_api_url: '"https://fridgy-backend.simon-neutert.de"'
     environment:
       TZ: 'Europe/Berlin'
+      BEARER: 'xxx'
     links:
       - api_backend:api_backend
     privileged: true
@@ -41,6 +42,7 @@ services:
     restart: unless-stopped
     environment: 
       NODE_ENV: 'production'
+      BEARER: 'xxx'
     build: 
       context: .
       dockerfile: ./docker/arm/node-backend/Dockerfile
