@@ -1,0 +1,59 @@
+version: '2.2'
+services:
+  web:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./docker/arm/node-frontend/Dockerfile
+      args:
+        vue_app_backend_api_url: '"http://api_backend:8081"'
+    environment:
+      TZ: 'Europe/Berlin'
+    ports:
+      - "8080:8080"
+    links:
+      - api_backend:api_backend
+    privileged: true
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "5"
+    labels: 
+      - "traefik.enable=true"
+      - "traefik.docker.network=web"
+      - "traefik.http.routers.simonneutert.entrypoints=web"
+      - "traefik.http.routers.simonneutert.rule=Host(`fridgy.simon-neutert.de`)"
+      - "traefik.http.routers.simonneutert.middlewares=https_redirect"
+      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.simonneutert_https.entrypoints=websecure"
+      - "traefik.http.routers.simonneutert_https.rule=Host(`fridgy.simon-neutert.de`)"
+      - "traefik.http.routers.simonneutert_https.tls.certresolver=myhttpchallenge"
+      - "traefik.http.services.simonneutert.loadbalancer.server.port=8080"
+    networks:
+      - backend
+
+  api_backend:
+    restart: unless-stopped
+    environment: 
+      NODE_ENV: 'production'
+    build: 
+      context: .
+      dockerfile: ./docker/arm/node-backend/Dockerfile
+    ports:
+      - "8081:8081"
+    volumes:
+      - fridgydatabase:/fridgy-backend/database
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "5"
+    networks:
+      - backend
+
+volumes:
+  fridgydatabase:
+
+networks:
+  backend:
