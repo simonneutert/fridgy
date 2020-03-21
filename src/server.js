@@ -17,6 +17,7 @@ var corsOptions = {
 app.use(cors(corsOptions))
 
 app.use(function (req, res, next) {
+  console.log(req.ip)
   if (process.env.NODE_ENV === 'production' && req.ip && req.ip !== '83.135.72.67') {
     res.writeHead(404, {
       'Content-Type': 'text/plain'
@@ -24,7 +25,7 @@ app.use(function (req, res, next) {
     res.end('Not found')
   } else {
     res.header('Access-Control-Allow-Origin', '*')
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Authorization, X-Requested-With, Content-Type, Accept')
     next()
   }
 })
