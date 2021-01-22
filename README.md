@@ -64,10 +64,11 @@ ssh onto the raspberry, then
 
 ## Cron Job
 
-~~~
+``` bash
 * /30 * * * * docker cp fridgy_api_backend_1:fridgy-backend/database/fridgy.sqlite "/home/pi/fridgy_db_backup/fridgy.sqlite.backup-$(date +"\%y\%m\%d\%H\%M")";
+
 0 5 * * * find /home/pi/fridgy_db_backup/*.sqlite.backup* -mtime +7 -exec {} \;
-~~~
+```
 
 ## Hacker's Choice Award
 
