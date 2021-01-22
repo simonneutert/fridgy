@@ -50,7 +50,7 @@
         <br />
 
         <b-card :title="Paypal" style="text-align:center;">
-          <img src="/static/img/paypal-simon.gif" />
+          <img src="/static/img/tw_pp.png" />
         </b-card>
       </b-col>
     </b-row>
